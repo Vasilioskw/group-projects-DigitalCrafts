@@ -32,40 +32,39 @@ app.get('/breed', (req, res) => {
     res.render('breed-list', {
         locals:{
             allDogs:db
+        },
+        partials: {
+            head: "/partials/head"
         }
     })
 });
 
- 
 
-
-app.get('/breeds/:dog', (req, res) => {
-    console.log(req.params.name);
-    var {name} = req.params;
-    var breed = db.find(thisBreed => thisBreed.dog === breed);
-    if (friend) {
-    console.log(dog);
+app.get('/breed/:breed', (req, res) => {
+    console.log("req params name ",req.params);
+    var {breed} = req.params;
+    console.log("The breed is: ",breed)
+    var dog = db.find(thisBreed => thisBreed.breed === breed);
+    if (dog) {
+    console.log("The dog data is: ",dog);
 
     res.render('dogs', {
         locals: {
-            dog:dog,
-            title:'dog'
-        }
+            dog,
+            title:'single dog'
+        },
+        partials: {
+            image: "/partials/image",
+            head: "/partials/head"
+        } 
     }) 
-    let htmlData =``;
-    htmlData += `<h1>${friend.name}</h1>`;
-    htmlData += `<h1>${friend.skill}</h1>`;
-    htmlData += `<h1>${friend.handle}</h1>`;
-  
-    res.send(htmlData);
+   
 
     } else {
 res.status(404)
-        .send("No friend with that name found")
+        .send("No dog with that name found")
         }
 });
-
-
 
 
 server.listen(port, hostname, () => {
